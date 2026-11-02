@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海内外内容平台观测器</title>
+  <meta name="description" content="用 12 个维度对照 8 个国内平台与 8 个海外平台。结构基线，2026 年第一季度。">
+  <meta property="og:title" content="海内外内容平台观测器">
+  <meta property="og:description" content="12 维结构基线，覆盖抖音、小红书、TikTok、YouTube 等 16 个平台。">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://trumancui293-cmyk.github.io/platform-observer/">
+  <style>
+    :root {
+      --bg: #f3efe7;
+      --ink: #1c1915;
+      --muted: #6b645c;
+      --line: #e2d9cc;
+      --paper: #fffcf8;
+      --accent: #145e56;
+      --ink-2: #17211f;
+      --sand: #c4a574;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .hero { background: var(--ink-2); color: #f6f3ec; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    .hero-inner { padding: 36px 0 28px; }
+    .kicker { margin: 0 0 8px; letter-spacing: 0.08em; font-size: 12px; color: #d5c7b0; }
+    h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.25; font-weight: 650; }
+    .lede { margin: 0; max-width: 68ch; color: #ebe4d8; }
+    .hero-actions { display: flex; gap: 12px; align-items: center; margin-top: 16px; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    .ghost {
+      background: transparent;
+      color: #f6f3ec;
+      border: 1px solid #8d9a96;
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    #flash { font-size: 13px; color: #d5c7b0; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(243, 239, 231, 0.96);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 10px; padding-bottom: 10px; }
+    main { padding: 8px 0 48px; }
+    h2 { font-size: 22px; line-height: 1.3; margin: 28px 0 8px; }
+    h3 { font-size: 16px; margin: 0 0 8px; }
+    p { margin: 0 0 10px; }
+    .tab, .chip {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    .tab.active, .chip.active { background: var(--ink-2); border-color: var(--ink-2); color: #f6f3ec; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+    .stat { background: var(--paper); border: 1px solid var(--line); padding: 14px 16px; }
+    .stat b { display: block; font-size: 28px; line-height: 1.1; font-weight: 650; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .note { border-left: 3px solid var(--accent); background: #f3faf8; padding: 12px 14px; margin: 12px 0; }
+    .note.warn { border-left-color: #8d4e1b; background: #fbf6f0; }
+    .split { display: grid; grid-template-columns: 1fr 1.3fr; gap: 28px; align-items: start; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .block { background: var(--paper); border: 1px solid var(--line); padding: 14px 16px; }
+    .caption { color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); background: var(--paper); margin: 8px 0 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
+    th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; white-space: nowrap; background: #faf7f2; }
+    tr:last-child td { border-bottom: 0; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .tag { display: inline-block; padding: 0 6px; border: 1px solid var(--line); font-size: 12px; color: var(--accent); }
+    .filters, .toolbar, .hero-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .filters { margin: 8px 0; }
+    .toolbar { margin: 12px 0; }
+    input[type="search"], input[type="text"], select {
+      border: 1px solid #d9d0c4;
+      background: var(--paper);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+    input[type="search"] { min-width: 240px; }
+    textarea { width: 100%; border: 1px solid #d9d0c4; background: var(--paper); border-radius: 6px; padding: 8px 10px; min-height: 96px; }
+    .primary { background: var(--accent); color: #f4fbfa; border: 0; border-radius: 999px; padding: 8px 14px; }
+    .text-btn { background: none; border: 0; padding: 0; color: var(--accent); text-align: left; }
+    .legend { display: flex; gap: 16px; font-size: 13px; margin-bottom: 8px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 12px; height: 12px; display: inline-block; }
+    .swatch.a, .rail i.a { background: var(--accent); }
+    .swatch.b, .rail i.b { background: var(--sand); }
+    .cmp { display: grid; grid-template-columns: 92px 1fr; column-gap: 10px; margin: 0 0 10px; }
+    .cmp-label { grid-row: span 2; align-self: center; font-size: 13px; }
+    .cmp.single .cmp-label { grid-row: auto; }
+    .cmp-track { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+    .rail { flex: 1; height: 8px; background: #ece6dc; }
+    .rail i { display: block; height: 8px; }
+    .cmp-track b { width: 32px; font-size: 12px; font-weight: 600; }
+    .families { list-style: none; margin: 0; padding: 0; }
+    .families li { display: grid; grid-template-columns: 88px 1fr 24px; gap: 8px; align-items: center; margin: 7px 0; font-size: 13px; }
+    .check { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    footer { border-top: 1px solid var(--line); padding: 18px 0 28px; color: var(--muted); font-size: 12px; }
+    @media (max-width: 800px) {
+      h1 { font-size: 26px; }
+      .stats, .split, .grid-2, .form-grid { grid-template-columns: 1fr; }
+      .cmp { grid-template-columns: 1fr; }
+      .cmp-label { grid-row: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <p class="kicker">可转发的结构基线 · 2026 年第一季度</p>
+      <h1>海内外内容平台观测器</h1>
+      <p class="lede">用同一套 12 个维度观察 8 个国内平台和 8 个海外平台。先定用户任务，再选平台，最后核对内容要求。分数用来判断一个平台适合承担什么；当天热榜和投放数据请另外采集。</p>
+      <div class="hero-actions">
+        <button class="ghost" id="copy" type="button">复制分享链接</button>
+        <span id="flash"></span>
+      </div>
+    </div>
+  </header>
+  <nav><div class="wrap" id="nav"></div></nav>
+  <main class="wrap" id="main"></main>
+  <footer>
+    <div class="wrap">结构基线由公开产品形态整理，不是平台官方实时数据。观测记录只保存在你自己的浏览器里。</div>
+  </footer>
+  <script>
+const SCORE_KEYS = ["seed", "brand", "community", "velocity", "search"];
+
+const SCORE_LABEL = {
+  seed: "种草决策",
+  brand: "品牌心智",
+  community: "社区深度",
+  velocity: "热点速度",
+  search: "搜索承接",
+};
+
+const FAMILY_ORDER = ["短视频", "生活方式", "中长视频", "舆论", "社区问答", "关系网络"];
+
+const TABS = [
+  { id: "overview", label: "框架总览" },
+  { id: "platforms", label: "平台对照" },
+  { id: "audience", label: "受众与调研" },
+  { id: "trends", label: "热点趋势" },
+  { id: "specs", label: "内容要求" },
+  { id: "log", label: "观测台账" },
+];
+
+const PLATFORMS = [
+  {
+    id: "douyin",
+    name: "抖音",
+    region: "国内",
+    family: "短视频",
+    type: "短视频与直播",
+    graph: "兴趣推荐",
+    forms: "15–60 秒竖屏、直播、图文、微短剧",
+    blurb: "兴趣推荐驱动的国民短视频，同时是直播和货架成交场。",
+    audience: "全年龄都在，都市消费决策和下沉娱乐并存，女性消费内容更密。",
+    age: "18–40 岁是内容与成交重心，中年用户持续进入。",
+    geo: "全国，城市与县域内容风格要分开看。",
+    job: "消磨时间、追一个刚发生的热点，并可能在直播间做决定。",
+    trust: "完播、重复露出和直播间销量，比精致品牌片更有用。",
+    pain: "广告感太重、铺垫太长、和自己的城市或价格带无关。",
+    trend: "微短剧、结果前置的知识切片、本地生活、系列追更。",
+    watch: "连续三天记录同一热点的前两秒：是反转、结果，还是本地场景。",
+    duration: "竖屏 9:16。信息流常见 15–60 秒，短剧按集，直播单独看。",
+    hook: "第 1 秒给冲突、结果或反差，不要先自我介绍。",
+    cover: "人脸或结果，字幕大、少、对比强。",
+    copy: "口播用短句。话题词服务这条内容，不要堆无关热词。",
+    cta: "一次只留一个动作：评论关键词、直播预约或橱窗。",
+    ban: "横屏长铺垫、念稿广告、没有事件的空镜。",
+    compliance: "商业推广要标识。医疗、金融、教育和效果承诺有额外限制。",
+    money: "信息流广告、直播、橱窗、本地生活和商单。",
+    creator: "门槛低，机构多。稳定人设和直播能力比单条爆款耐用。",
+    kpi: "2 秒留存、完播、互动、进直播间和成交，不要只看播放。",
+    cadence: "每天看推荐流，每周看直播话术，每月看类目和标识规则。",
+    peer: "TikTok",
+    keep: "钩子节奏、字幕、系列结构。",
+    redo: "梗、音乐版权、语言、电商开通范围。",
+    scores: { seed: 5, brand: 4, community: 2, velocity: 5, search: 3 },
+  },
+  {
+    id: "xhs",
+    name: "小红书",
+    region: "国内",
+    family: "生活方式",
+    type: "生活方式搜索社区",
+    graph: "搜索 + 推荐",
+    forms: "图文笔记、30–90 秒口播、合集、直播",
+    blurb: "用户把它当消费和生活决策的搜索引擎，而不只是信息流。",
+    audience: "一二线年轻女性仍是基本盘，男性和更多城市的用户在变多。",
+    age: "18–35 岁为主。",
+    geo: "一二线更密，下沉内容正在增加，但不能用同一套语气。",
+    job: "买之前、去之前、学之前，先找真实体验和避坑。",
+    trust: "具体细节、对比、使用条件和评论区共识。",
+    pain: "精修广告、只有氛围没有信息、说了绝对化的效果。",
+    trend: "搜索词布局、清单体、真实测评、城市生活和职场经验。",
+    watch: "固定搜一个品类词，记录前 10 篇的标题，以及评论里的不信任句。",
+    duration: "图文常见 6–9 张；视频常见竖屏 30–90 秒。封面就是第一张。",
+    hook: "封面上用一句结论，指向一个具体问题。",
+    cover: "真实场景、大字少。海报感过强会被当成广告。",
+    copy: "标题含可被搜索的词。正文按结论、证据、步骤、避坑写。",
+    cta: "鼓励收藏和评论追问。把交易引到站外有合规风险。",
+    ban: "只有氛围没有信息、硬广口播、编造使用体验。",
+    compliance: "商业合作要报备。避免绝对化用语，以及没有证据的功效和前后对比。",
+    money: "商业笔记、直播、店铺和品牌合作。",
+    creator: "个人体验账号仍有信任优势。机构化之后，评论区会更严格地验真。",
+    kpi: "搜索收录、收藏、评论质量、主页访问。收藏比点赞更接近决策。",
+    cadence: "每周用固定搜索词采样，每月复盘收藏和报备规则。",
+    peer: "Instagram 与 Pinterest",
+    keep: "生活方式选题、步骤和避坑结构。",
+    redo: "封面语言、搜索关键词、审美密度和披露方式。",
+    scores: { seed: 5, brand: 4, community: 4, velocity: 3, search: 5 },
+  },
+  {
+    id: "channels",
+    name: "视频号",
+    region: "国内",
+    family: "短视频",
+    type: "社交短视频",
+    graph: "社交推荐",
+    forms: "口播短视频、直播、转发卡片",
+    blurb: "内容沿着微信关系链走，信任来自朋友点赞，而不是纯兴趣推荐。",
+    audience: "30 岁以上更突出，覆盖家庭决策者和已经在用微信做生意的人。",
+    age: "30–55 岁是更有特征的一群。",
+    geo: "全国，本地商家和私域团队浓度高。",
+    job: "看看朋友在看什么，把可信的人和直播转发出去。",
+    trust: "熟人点赞、稳定出镜的人、可加到企业微信的关系。",
+    pain: "太像抖音广告、看不懂的年轻梗、不知道说话的人是谁。",
+    trend: "可信口播、知识与本地生活、直播预告后的私域承接。",
+    watch: "看朋友点赞区，而不是只看热门。记录什么内容会被长辈转发。",
+    duration: "竖屏口播常见 30–90 秒。直播预告可以更短。",
+    hook: "先亮身份，以及这件事和观看者的关系。节奏可以比抖音慢。",
+    cover: "人物清楚，标题像在对朋友说话。",
+    copy: "口语、具体、值得转发。少用只有小圈子懂的梗。",
+    cta: "关注、转发、预约直播或加企业微信。点赞本身会帮助扩散。",
+    ban: "精致广告片、与账号人设无关的追热点。",
+    compliance: "诱导分享、外链和医疗金融类内容受微信规则约束。",
+    money: "直播、私域成交、商家广告和公众号联动。",
+    creator: "已有微信关系的个人和商家更有优势。冷启动靠内容，放大靠转发。",
+    kpi: "朋友点赞、转发、关注、直播预约和私域添加。",
+    cadence: "每天看朋友点赞，每周看哪类口播被转发，每月看直播转化。",
+    peer: "Facebook 群组与 Reels",
+    keep: "熟人信任和可转发的说法。",
+    redo: "微信里的身份、组件和群文化无法直接翻译。",
+    scores: { seed: 4, brand: 3, community: 3, velocity: 2, search: 2 },
+  },
+  {
+    id: "bilibili",
+    name: "B站",
+    region: "国内",
+    family: "中长视频",
+    type: "中长视频社区",
+    graph: "关注 + 推荐",
+    forms: "3–15 分钟视频、系列、弹幕、短视频补充",
+    blurb: "年轻人的兴趣社区。用户为了信息和归属留下来，不为一句口号停留。",
+    audience: "学生和年轻职场是基本盘，兴趣分区差异大于年龄差异。",
+    age: "16–30 岁更密。",
+    geo: "城市年轻用户为主，兴趣圈是跨城市的。",
+    job: "把一个爱好或问题看懂，并待在懂行的人中间。",
+    trust: "信息增量、系列连续性、弹幕和评论里的圈内校正。",
+    pain: "标题不兑现、把短视频拉长、商单装成客观评测。",
+    trend: "知识区、AI、游戏、生活区出圈，以及用短视频把人带回系列。",
+    watch: "选一个分区，比较本周播放高和三连高的视频差在哪。",
+    duration: "主力 3–15 分钟，系列优于单集。竖屏只做补充。",
+    hook: "开头 15 秒说明能多知道什么，而不是只重复标题。",
+    cover: "封面和标题可以有钩子，正文必须兑现。",
+    copy: "有结构、有观点、有来源。三连要给一个具体理由。",
+    cta: "追更、投币、关注系列。商单要让人看得出边界。",
+    ban: "无信息增量的切片拉长，以及俯视观众。",
+    compliance: "商单标注、素材版权、分区和未成年人规则。",
+    money: "商单、充电、课堂和广告。直接货架成交不是它的主场。",
+    creator: "门槛在内容质量不在注册。垂类信誉一旦损了很难补。",
+    kpi: "完播、三连、追更和评论质量。播放量单独看会误判。",
+    cadence: "每周看一个分区的新系列，每月看商单下的评论态度。",
+    peer: "YouTube",
+    keep: "中视频结构、章节和系列。",
+    redo: "弹幕文化、标题长度、封面习惯和社区玩笑。",
+    scores: { seed: 3, brand: 4, community: 5, velocity: 3, search: 3 },
+  },
+  {
+    id: "kuaishou",
+    name: "快手",
+    region: "国内",
+    family: "短视频",
+    type: "信任短视频与直播",
+    graph: "关注关系",
+    forms: "真人短视频、直播、地域内容",
+    blurb: "老铁关系比单次曝光重要。信任电商和陪伴式直播是它的特征。",
+    audience: "北方、县域和价格敏感用户更有特征，都市内容同样存在。",
+    age: "25–50 岁的家庭与劳动者决策更值得看。",
+    geo: "下沉与地域社区更强，内容不要默认一线语境。",
+    job: "找一个靠谱的人，看实在的价格，并在直播里做决定。",
+    trust: "反复出镜、地域身份、性价比和直播间的熟客关系。",
+    pain: "过度精致、瞧不起观众、只有一次的促销人设。",
+    trend: "真人测评、产地与工厂、稳定直播间、家庭决策内容。",
+    watch: "看一个直播间的回头客怎么称呼主播，而不是只看在线人数。",
+    duration: "短视频负责认识人，直播负责成交。人设要跨天连续。",
+    hook: "直接说今天给谁解决什么。价格和条件说清楚。",
+    cover: "真人、生活或工作场景，少设计感。",
+    copy: "方言和地域可以保留。强调靠谱，不强调姿态。",
+    cta: "进直播间、关注、回访。",
+    ban: "棚拍广告腔、突然换一个与人设无关的高端语气。",
+    compliance: "直播话术、价格比较、食品美妆等类目资质。",
+    money: "直播带货、粉条和商家合作。关系资产比一笔订单重要。",
+    creator: "普通人可做。机构要保住主播本人的信任，不能换成纯广告口吻。",
+    kpi: "关注回访、直播停留、复购和互动里的熟客比例。",
+    cadence: "每天看主播与老粉的对话，每周看价格表述，每月看复购话术。",
+    peer: "没有严格对等，只能弱对照 TikTok 的生活内容",
+    keep: "真人关系和把价格说清楚。",
+    redo: "老铁社区、地域身份和信任成交不能翻译。",
+    scores: { seed: 4, brand: 3, community: 4, velocity: 3, search: 2 },
+  },
+  {
+    id: "weibo",
+    name: "微博",
+    region: "国内",
+    family: "舆论",
+    type: "热搜舆论场",
+    graph: "热搜话题",
+    forms: "短文本、图片、短视频、话题",
+    blurb: "公共舆论和娱乐话题的广场。适合被看见和被引用，不适合慢慢种草。",
+    audience: "娱乐、时事、粉丝和媒体用户重叠。",
+    age: "18–40 岁更活跃。",
+    geo: "全国性话题为主，本地话题要靠话题词。",
+    job: "第一时间知道发生了什么，并表态或围观。",
+    trust: "速度、可核对的事实、熟悉的账号和话题里的多数态度。",
+    pain: "迟到、两边不得罪的空话、明显的控评感。",
+    trend: "议题速度、粉丝组织、品牌回应的时效、短视频补充热搜。",
+    watch: "同一话题在两小时内的前后说法变化，以及评论站队用的词。",
+    duration: "短文本加图或短视频。话题词决定能不能进入讨论。",
+    hook: "第一句就要有新事实或明确判断。",
+    cover: "图片要在信息流里一眼读懂。",
+    copy: "短、可被引用。长解释放到文章，不要硬塞进一条微博。",
+    cta: "参与话题、转发。不要在这里期待完整购买决策。",
+    ban: "慢热铺垫、过时热点、没有事实的态度。",
+    compliance: "未经证实的消息、人身攻击、饭圈极端行为和广告标识。",
+    money: "热搜与话题广告、粉丝经济和品牌曝光。",
+    creator: "媒体、当事人和粉丝账号的权力结构不同。品牌号单独说话往往没力。",
+    kpi: "话题阅读、转发、评论立场和回应时效。",
+    cadence: "每天看正在上升的话题，事件期按小时看说法变化。",
+    peer: "X",
+    keep: "速度、第一句判断、可被引用。",
+    redo: "热搜机制、粉丝组织和中文语境里的立场。",
+    scores: { seed: 2, brand: 4, community: 3, velocity: 5, search: 3 },
+  },
+  {
+    id: "zhihu",
+    name: "知乎",
+    region: "国内",
+    family: "社区问答",
+    type: "问答与专栏",
+    graph: "问题搜索",
+    forms: "回答、专栏、想法、视频",
+    blurb: "用户带着问题来。先回答，再证明你有资格回答。",
+    audience: "教育程度较高的城市用户，理性比较和专业背书需求强。",
+    age: "22–40 岁更典型。",
+    geo: "一二线更密。",
+    job: "把一个问题想清楚，并判断回答者可不可信。",
+    trust: "直接回答、条件边界、资料和回答者的历史一致性。",
+    pain: "答非所问、软文伪装成体验、没有边界的绝对判断。",
+    trend: "专业人士个人回答、把复杂问题写成可保存的结构。",
+    watch: "找一个商业问题，看高赞回答如何在第一段处理利益关系。",
+    duration: "先用约 150 字给结论，再展开。专栏可以更长。",
+    hook: "第一段直接回答标题里的问题。",
+    cover: "问题就是封面，不要另造一套悬念。",
+    copy: "论证、适用条件、反例和来源。利益关系主动说出来。",
+    cta: "让人因为回答质量关注。不要在结论前要购买。",
+    ban: "不回答问题、假装中立的软文、贩卖焦虑。",
+    compliance: "商业内容要可识别。医疗、法律、金融避免处方式建议。",
+    money: "品牌提问、专栏合作和专业服务引流。硬转化效率低。",
+    creator: "专业身份是资产。机构号若没有具体的人，信任会弱一档。",
+    kpi: "搜索排名、赞同、收藏和评论里的补充，而不是情绪争吵。",
+    cadence: "每周跟踪一组固定问题，每月看商业回答的评论耐受度。",
+    peer: "Reddit，深度解答也可对照 YouTube",
+    keep: "问题先行、证据和适用边界。",
+    redo: "社区对营销的耐受度，以及版规。",
+    scores: { seed: 3, brand: 4, community: 3, velocity: 2, search: 5 },
+  },
+  {
+    id: "wechat",
+    name: "微信公众号",
+    region: "国内",
+    family: "关系网络",
+    type: "订阅图文",
+    graph: "订阅转发",
+    forms: "深度图文、短图文、合集",
+    blurb: "订阅关系里的深度阅读。打开靠标题，转发靠一个可带走的判断。",
+    audience: "已经关注的 25–45 岁读者，以及群聊里的二次读者。",
+    age: "25–45 岁。",
+    geo: "随账号本身，不存在统一的地域场。",
+    job: "把一篇有判断的文章读完，或转到对应的群。",
+    trust: "长期栏目、作者本人、文章里的证据和可转发的金句。",
+    pain: "标题与正文无关、没有新判断的汇编、太长却没有结构。",
+    trend: "个人作者优于空品牌号，短图文维护关系，长文建立判断。",
+    watch: "看哪类标题被打开，以及文末哪一句被群聊转发。",
+    duration: "深度文常见 1500–4000 字。短图文用来维持关系。",
+    hook: "标题决定打开，前三行决定是否继续。",
+    cover: "封面服务标题，不负责讲完整个故事。",
+    copy: "一个主张贯穿全文。小标题让人能扫读。",
+    cta: "在看、转发到群、阅读原文或关注栏目。",
+    ban: "标题党、没有判断的资料堆、每一段都在卖。",
+    compliance: "转载授权、诱导分享和虚假原创。",
+    money: "广告、付费阅读、电商和服务转化。前提是已经有订阅关系。",
+    creator: "冷启动难，关系资产深。适合已有观点的人或品牌栏目。",
+    kpi: "打开、读完、转发和回访。粉丝总数说明不了这一篇。",
+    cadence: "每篇记录标题假设，每月看哪类主张被转发。",
+    peer: "LinkedIn 长文与邮件订阅",
+    keep: "一个主张、可扫读的结构、订阅关系。",
+    redo: "中文标题语法和微信群的转发动机。",
+    scores: { seed: 3, brand: 5, community: 2, velocity: 2, search: 2 },
+  },
+  {
+    id: "tiktok",
+    name: "TikTok",
+    region: "海外",
+    family: "短视频",
+    type: "全球短视频",
+    graph: "兴趣推荐",
+    forms: "7–30 秒竖屏、系列、照片帖、部分市场的 Shop",
+    blurb: "For You 兴趣推荐是全球短视频主场，但每个国家是不同的文化市场。",
+    audience: "年轻用户为核心，美国、东南亚、欧洲的消费能力差很多。",
+    age: "16–30 岁更典型，以上年龄也在增长。",
+    geo: "必须按国家看，不能把全球当一个受众。",
+    job: "刷趋势、参与一个声音或格式，偶尔发现商品。",
+    trust: "原生感、趋势音频用得贴切、本地语言和评论里的同伴反应。",
+    pain: "翻译腔、别的平台水印、热门音乐和画面无关。",
+    trend: "站内搜索、系列、创作者带货。Shop 是否可用取决于市场。",
+    watch: "用目标国家的账号看 For You，记录重复出现的音频和字幕句式。",
+    duration: "9:16，常见 7–30 秒。系列可以更长。",
+    hook: "第一秒要有画面变化或一句结果。字幕默认打开。",
+    cover: "个人主页需要封面，但分发主要不靠封面。",
+    copy: "本地口语。趋势音频必须和内容有关。",
+    cta: "关注系列、评论关键词。购物入口按市场决定，不要默认全球都有。",
+    ban: "国内成片只换字幕、水印、无关的热门音乐。",
+    compliance: "音乐版权、广告披露、未成年人规则，以及各国电商政策。",
+    money: "广告、创作者商单，以及已开通市场的 Shop。",
+    creator: "原生创作者优于品牌自制精修。本地创作者合作通常比搬运有效。",
+    kpi: "完播、复播、关注系列和目标国家的评论语言。",
+    cadence: "每天看目标国 For You，每周复盘一个音频趋势是否还活着。",
+    peer: "抖音",
+    keep: "短视频钩子、字幕和系列。",
+    redo: "文化梗、音乐、语言和购物功能。",
+    scores: { seed: 4, brand: 4, community: 2, velocity: 5, search: 4 },
+  },
+  {
+    id: "instagram",
+    name: "Instagram",
+    region: "海外",
+    family: "生活方式",
+    type: "视觉社交",
+    graph: "关注 + Reels",
+    forms: "Reels、轮播、Stories、主页网格",
+    blurb: "品牌和生活美学的视觉主场。Reels 负责被发现，网格负责被记住。",
+    audience: "18–40 岁的视觉消费者和生活方式品牌受众。",
+    age: "18–40 岁。",
+    geo: "欧美品牌浓度高，中东、拉美和东南亚要分开运营。",
+    job: "看一个喜欢的审美，保存可执行的做法，或维持已有关注。",
+    trust: "视觉一致性、真人出镜、步骤型轮播和已关注的人转发到 Stories。",
+    pain: "只追热门 Reels 却和账号无关、模糊搬运、网格像广告册。",
+    trend: "Reels 发现、轮播教学、创作者合作、广播频道维护核心受众。",
+    watch: "把一个账号的 Reels 和网格分开记：哪条带来新观众，哪条服务老观众。",
+    duration: "Reels 常见 7–30 秒。轮播 5–10 张适合步骤。Stories 服务已有关系。",
+    hook: "Reels 第一秒要有动作或结果。轮播第一张就是结论。",
+    cover: "网格风格要一致，但单条仍要独立读懂。",
+    copy: "正文前两行最重要。话题少而准。",
+    cta: "保存、分享到 Stories、访问主页链接。",
+    ban: "低清晰度搬运、与账号无关的趋势、只有广告口号的画面。",
+    compliance: "品牌合作披露和音乐的商用授权。",
+    money: "广告、品牌合作、主页导流和创作者分成。",
+    creator: "审美和出镜稳定性是门槛。适合已经有视觉识别的品牌和创作者。",
+    kpi: "Reels 播放、保存、分享、主页访问。保存接近使用意图。",
+    cadence: "每周拆一次发现与关系内容的比例，每月看网格是否还认得出来。",
+    peer: "小红书的视觉一侧",
+    keep: "生活方式选题和步骤型轮播。",
+    redo: "英文封面、网格审美和 Stories 的关系运营。",
+    scores: { seed: 4, brand: 5, community: 3, velocity: 4, search: 3 },
+  },
+  {
+    id: "youtube",
+    name: "YouTube",
+    region: "海外",
+    family: "中长视频",
+    type: "视频搜索与订阅",
+    graph: "搜索 + 订阅",
+    forms: "长视频、Shorts、直播、章节",
+    blurb: "全球视频搜索引擎。长视频承接意图，Shorts 负责被发现。",
+    audience: "全年龄。用户经常带着明确问题来，而不只是来消磨时间。",
+    age: "分布宽，18–45 岁的学习和评测需求最值得内容团队看。",
+    geo: "英语市场是基本参照，其他语言要独立频道策略。",
+    job: "把一个问题看完，确认这个频道以后还值不值得订阅。",
+    trust: "标题兑现、前 30 秒的证据、章节、稳定的发布和评论区修正。",
+    pain: "标题党、过长片头、Shorts 和长视频各说各话。",
+    trend: "搜索型长视频、Shorts 导流、创作者带货和可保存的教程。",
+    watch: "搜一个购买或教程词，记录前五个结果的标题句式和前 30 秒。",
+    duration: "搜索型长视频常见 8–20 分钟。Shorts 用来发现，不替代长视频。",
+    hook: "标题写成检索词。前 30 秒兑现，不演前言。",
+    cover: "缩略图是一张脸或一个结果，字很少。",
+    copy: "描述区写章节和关键词。置顶评论承接问题。",
+    cta: "订阅一个明确系列，而不是空泛地求订阅。",
+    ban: "不兑现的标题、太长的片头动画、只有 Shorts 没有深度。",
+    compliance: "付费推广标注、版权内容声明、面向儿童的内容规则。",
+    money: "广告分成、频道会员、商单和购物。搜索意图是这些收入的前提。",
+    creator: "长期频道信誉是壁垒。一个频道最好服务一种明确意图。",
+    kpi: "点击率、平均观看时长、订阅转化和搜索排名。",
+    cadence: "每周搜固定关键词看排名，每月看观众留在哪一章。",
+    peer: "B站",
+    keep: "章节、系列和标题即承诺。",
+    redo: "缩略图、英语检索词和片头习惯。",
+    scores: { seed: 4, brand: 4, community: 3, velocity: 2, search: 5 },
+  },
+  {
+    id: "x",
+    name: "X",
+    region: "海外",
+    family: "舆论",
+    type: "实时公共对话",
+    graph: "关注时间线",
+    forms: "短帖、线程、原生图片和短视频",
+    blurb: "英语世界的实时公共对话。速度和可引用性高于制作。",
+    audience: "媒体、科技、政治、金融和行业意见领袖重叠。",
+    age: "25–45 岁的公共讨论者更典型。",
+    geo: "英语舆论场为主，不能代表所有海外用户。",
+    job: "马上知道圈内在争论什么，并转发一句判断。",
+    trust: "速度、具体事实、长期发言记录和被谁转发。",
+    pain: "企业公告腔、没有上下文的链接、迟到的热点。",
+    trend: "个人账号优于品牌账号，线程用来展开，视频要原生。",
+    watch: "选一个行业议题，记录第一小时内被转发的原句。",
+    duration: "单帖要短。线程通常 5–12 帖。视频宁可短，不要精修迟发。",
+    hook: "第一行是判断或新事实，不是「线程来了」。",
+    cover: "图片上的字要在时间线里可读。",
+    copy: "写成可以被引用的句子。少用话题标签。",
+    cta: "鼓励回复和转发。让人关注的是人，不是品牌口号。",
+    ban: "公关稿原文、没有观点的链接、过了时效还在解释。",
+    compliance: "误导性媒体、金融和政治敏感内容、广告披露。",
+    money: "订阅、广告和品牌影响力。不适合作为货架。",
+    creator: "个人专业账号有效。品牌安全账号往往没有传播。",
+    kpi: "转发、回复质量、被谁引用，以及发出的速度。",
+    cadence: "工作日按小时看行业时间线，事件后复盘第一句。",
+    peer: "微博",
+    keep: "第一句判断和速度。",
+    redo: "中文热搜、粉丝组织和立场表达方式。",
+    scores: { seed: 1, brand: 3, community: 3, velocity: 5, search: 2 },
+  },
+  {
+    id: "reddit",
+    name: "Reddit",
+    region: "海外",
+    family: "社区问答",
+    type: "兴趣论坛",
+    graph: "版块投票",
+    forms: "帖子、评论、AMA、部分版块的图片和视频",
+    blurb: "按兴趣分成的论坛。投票和版规决定内容死活，品牌身份要后置。",
+    audience: "英语用户里的高意图、高怀疑人群。每个版块是一个单独的社区。",
+    age: "18–40 岁更常见，版块之间差别很大。",
+    geo: "美国英语社区最强，其他语言版块要单独看。",
+    job: "在懂的人中间核对一件事，并补充自己的经验。",
+    trust: "具体经验、承认局限、遵守版规、接受评论纠正。",
+    pain: "营销口吻、发错版块、只发链接、不参与后续评论。",
+    trend: "购买前先来社区核对，搜索引擎会把帖子带到站外决策里。",
+    watch: "选一个产品版块，读置顶规则，再记高赞评论如何拆穿广告。",
+    duration: "长度由版块决定。发之前先读规则和历史帖。",
+    hook: "标题说明你提供什么，并用这个社区的说法。",
+    cover: "多数版块不靠封面取胜。",
+    copy: "先给有用信息。品牌身份按版规放在后面或明确披露。",
+    cta: "邀请补充和纠错。不要号召关注品牌。",
+    ban: "营销号语气、无视版规、把同一篇软文投进多个版块。",
+    compliance: "各版块的自我推广比例、联盟链接披露和禁止的主张。",
+    money: "几乎没有顺滑的站内货架。价值是研究和口碑，不是直接成交。",
+    creator: "长期以个人身份参与才有信誉。空降品牌帖通常被投下去。",
+    kpi: "投票、评论补充、帖子是否被当成参考，而不是曝光量。",
+    cadence: "进入任何版块前先读规则。每周跟踪一个购买版块的异议。",
+    peer: "知乎",
+    keep: "问题先行和接受反驳。",
+    redo: "版规、对软文的敌意和英文社区语境。",
+    scores: { seed: 3, brand: 2, community: 5, velocity: 3, search: 4 },
+  },
+  {
+    id: "linkedin",
+    name: "LinkedIn",
+    region: "海外",
+    family: "关系网络",
+    type: "职业社交",
+    graph: "职业关系",
+    forms: "短帖、文档轮播、30–90 秒视频、文章",
+    blurb: "职业身份的公共场合。适合建立专业判断，不适合消费品牌硬广。",
+    audience: "在职人员和 B2B 决策者。招聘、销售和行业专家共用一个场。",
+    age: "25–50 岁。",
+    geo: "英语职场是参照，欧洲和亚太的使用方式不同。",
+    job: "维护职业形象，判断一个行业，或找到可以交谈的人。",
+    trust: "可验证的个人经验、具体数字的上下文、稳定的专业范围。",
+    pain: "空泛励志、伪装成故事的销售、把消费广告搬进来。",
+    trend: "个人创作者、文档轮播、公司高管账号优于公司主页。",
+    watch: "记录本周被同事转发的帖子，第一行判断是什么，有没有具体经历。",
+    duration: "短帖 8–15 行。文档 6–12 页。视频 30–90 秒。",
+    hook: "第一行是一个职场里可验证的判断。",
+    cover: "文档首页只放一个主张，字大。",
+    copy: "个人经验加上对行业的含义。少用形容词。",
+    cta: "邀请评论经验。私信要有具体理由，不在第一条就要购买。",
+    ban: "鸡汤、虚假人设、没有披露的软文。",
+    compliance: "招聘、金融和客户证言的真实性，以及广告标识。",
+    money: "线索、招聘和专业服务。不是消费货架。",
+    creator: "真实在职的人最有优势。公司主页需要员工个人来放大。",
+    kpi: "评论质量、转发给同事、主页访问和有效对话。",
+    cadence: "每周发一条可验证的判断，每月看哪类文档被保存。",
+    peer: "公众号与知乎的职业内容",
+    keep: "一个明确判断和个人经验。",
+    redo: "英语职场语气，以及微信文章的标题方法。",
+    scores: { seed: 1, brand: 4, community: 3, velocity: 2, search: 2 },
+  },
+  {
+    id: "facebook",
+    name: "Facebook",
+    region: "海外",
+    family: "关系网络",
+    type: "综合社交与群组",
+    graph: "好友与群组",
+    forms: "群组帖、Reels、活动、Marketplace",
+    blurb: "在许多市场仍是家庭和本地群组的基础设施。群比公共信息流更有用。",
+    audience: "30 岁以上在不少国家仍是基本盘，本地社区和家庭决策者多。",
+    age: "30–60 岁更有特征。",
+    geo: "东南亚、拉美和部分欧美本地社区很强，要按国家看。",
+    job: "在自己的群和好友里交换本地信息、活动和生活决定。",
+    trust: "群管理员、重复出现的邻居或家长、可参加的线下活动。",
+    pain: "无视群规的链接、只有 Reels 没有群经营、不像本地人的语气。",
+    trend: "群组深耕、Reels 补充发现、本地活动和买卖信息。",
+    watch: "加入一个目标城市的主题群，记录什么样的帖子会被认真回复。",
+    duration: "群组帖以文字和讨论为主。Reels 作为补充，不代替群。",
+    hook: "先回应该群正在讨论的问题，再给出内容。",
+    cover: "本地和家庭场景比广告棚拍可信。",
+    copy: "写清楚，并留一个可以被评论的问题。",
+    cta: "进群、报名活动、主页私信。",
+    ban: "把同一条广告丢进多个群、只有链接没有上下文。",
+    compliance: "群规、政治广告，以及住房、就业、信贷等特殊广告类别。",
+    money: "广告、本地线索、活动和 Marketplace。群信任不能直接购买。",
+    creator: "本地管理员和真实成员比品牌页重要。",
+    kpi: "有意义的评论、入群、活动报名和重复参与。",
+    cadence: "每周参与目标群，每月评估品牌页是否真的有本地关系。",
+    peer: "视频号",
+    keep: "熟人转发和本地信任。",
+    redo: "群规、家庭决策语境和当地语言。",
+    scores: { seed: 3, brand: 3, community: 4, velocity: 2, search: 2 },
+  },
+  {
+    id: "pinterest",
+    name: "Pinterest",
+    region: "海外",
+    family: "生活方式",
+    type: "视觉搜索",
+    graph: "视觉搜索",
+    forms: "竖图 Pin、Idea Pin、图板",
+    blurb: "计划型搜索。用户保存的是未来要执行的做法，不是此刻的情绪。",
+    audience: "家居、穿搭、婚礼、食谱、旅行等计划场景，女性用户更突出。",
+    age: "25–45 岁的计划型用户。",
+    geo: "美国是最成熟的参照，英欧和其他市场的品类热度不同。",
+    job: "为一个尚未发生的决定收集可执行的图片和步骤。",
+    trust: "图上就能看懂的结果、清晰步骤、稳定的关键词和可用的落地页。",
+    pain: "只有情绪没有步骤、横图、描述写成品牌口号。",
+    trend: "搜索关键词、购物 Pin、用图板代表一种长期意图。",
+    watch: "搜一个计划型词，看前 20 张图上的字和描述里的关键词是否一致。",
+    duration: "竖图 2:3 为主。一条 Pin 只服务一个关键词。",
+    hook: "图上的字就是结论或清单名。",
+    cover: "图即封面。字少、对比清楚、值得被保存。",
+    copy: "标题和描述写成搜索词，不写品牌口号。",
+    cta: "保存到图板，并给出可以执行的页面。",
+    ban: "横图、无法执行的氛围图、图片和描述各说各话。",
+    compliance: "联盟链接披露和图片版权。",
+    money: "搜索广告、购物和联盟。保存是意图，不是已经购买。",
+    creator: "关键词纪律和视觉模板比个人魅力重要。",
+    kpi: "保存、出站点击、搜索展现。保存代表计划，不代表成交。",
+    cadence: "每月维护一组关键词，看哪些图板在持续被保存。",
+    peer: "小红书的搜索收藏一侧",
+    keep: "清单、步骤和可保存的结论。",
+    redo: "英文关键词、竖图版式和落地页。",
+    scores: { seed: 5, brand: 3, community: 2, velocity: 2, search: 5 },
+  },
+];
+
+const TRENDS = [
+  {
+    name: "搜索即内容",
+    short: "搜索内容化",
+    stage: "已发生，仍在加强",
+    platformIds: ["xhs", "douyin", "tiktok", "youtube", "pinterest", "zhihu"],
+    ask: "标题和封面承担关键词，正文先给结论。",
+    signal: "评论里出现求链接、求关键词、怎么搜。",
+  },
+  {
+    name: "系列化与短剧",
+    short: "系列短剧",
+    stage: "上升",
+    platformIds: ["douyin", "kuaishou", "channels", "tiktok", "instagram", "youtube"],
+    ask: "一条内容留下下一集的具体问题，而不是口头说关注。",
+    signal: "评论在追更，而不是只评价这一条。",
+  },
+  {
+    name: "真实感压过精修",
+    short: "真实感",
+    stage: "已发生",
+    platformIds: ["xhs", "kuaishou", "channels", "tiktok", "reddit", "youtube"],
+    ask: "保留使用条件、失败和具体细节。精修不能代替证据。",
+    signal: "高赞评论在质疑广告、滤镜或没说清楚的条件。",
+  },
+  {
+    name: "成交视频化但不均",
+    short: "视频成交",
+    stage: "国内成熟，海外分市场",
+    platformIds: ["douyin", "kuaishou", "channels", "tiktok", "instagram", "facebook"],
+    ask: "国内可以把决定设计在直播和短视频里。海外先确认该市场有没有货架。",
+    signal: "用户问价格和链接，或明确说要去另一个平台买。",
+  },
+  {
+    name: "关系链回流",
+    short: "关系链",
+    stage: "稳定存在",
+    platformIds: ["channels", "wechat", "kuaishou", "facebook", "linkedin"],
+    ask: "让内容可以被一个具体的人转给另一个具体的人。",
+    signal: "转发理由是「给我家里人」或「给我同事」，不是「好好笑」。",
+  },
+  {
+    name: "AI 生产与同质化",
+    short: "AI 同质化",
+    stage: "上升，伴随反感",
+    platformIds: ["douyin", "xhs", "tiktok", "instagram", "youtube", "bilibili", "wechat", "zhihu"],
+    ask: "用 AI 提高生产速度，但保留只有这个账号知道的事实。",
+    signal: "评论指出文案腔、假图、或和别的账号一模一样。",
+  },
+  {
+    name: "中视频与切片互导",
+    short: "切片互导",
+    stage: "已发生",
+    platformIds: ["bilibili", "douyin", "youtube", "tiktok"],
+    ask: "切片只负责把人带回完整版，完整版要有切片里没有的信息。",
+    signal: "评论问完整版在哪，或抱怨切片把结论截没了。",
+  },
+  {
+    name: "披露与版权变硬",
+    short: "披露变硬",
+    stage: "已发生，继续收紧",
+    platformIds: ["douyin", "xhs", "channels", "kuaishou", "weibo", "tiktok", "instagram", "youtube", "facebook", "x"],
+    ask: "商业关系、音乐和效果承诺在发布前就处理，不在爆了之后补。",
+    signal: "评论首问是不是广告，或平台提示版权和标识问题。",
+  },
+  {
+    name: "评论区成为第二现场",
+    short: "评论区",
+    stage: "已发生",
+    platformIds: ["xhs", "bilibili", "douyin", "youtube", "reddit", "weibo"],
+    ask: "发布后两小时按评论改置顶、补充篇或下一集。",
+    signal: "高赞评论提出了原内容没回答的具体条件。",
+  },
+  {
+    name: "本地生活与到店",
+    short: "本地到店",
+    stage: "国内强，海外看城市",
+    platformIds: ["douyin", "xhs", "channels", "instagram", "kuaishou"],
+    ask: "写清城市、价格带、适合谁，以及什么情况不要去。",
+    signal: "评论在交换分店、排队和真实价格。",
+  },
+];
+
+const JOBS = [
+  { id: "decide", label: "做购买决定", key: "seed", hint: "听：有没有用、贵不贵、求链接、避坑、会不会回购。" },
+  { id: "kill", label: "消遣追热点", key: "velocity", hint: "听：笑死、站队、已过时、又来了、求下一集。" },
+  { id: "learn", label: "学习解决问题", key: "search", hint: "听：求步骤、求关键词、这个条件我不适用。" },
+  { id: "circle", label: "找圈子身份", key: "community", hint: "听：黑话、补充设定、排挤广告、自己人。" },
+  { id: "brand", label: "建立专业或品牌形象", key: "brand", hint: "听：关注了、转给同事、这是广告吧。" },
+];
+
+const WEEKLY = [
+  { id: "topics", label: "每个主场平台记 3 条上升内容：形态、情绪、是不是系列，不只记话题名。" },
+  { id: "comments", label: "抽 20 条评论，分成信任词和反感词。" },
+  { id: "pair", label: "同一选题对比一个国内平台和一个海外平台，写下不能迁移的部分。" },
+  { id: "risk", label: "检查广告标识、绝对化用语、音乐版权和有没有未证实的效果对比。" },
+  { id: "gap", label: "记录一个内容缺口：用户在问，现有内容还没答好。" },
+];
+
+const SOURCE = "来源：本观测器结构基线 · 2026-11-02 编制 · 非平台官方实时数据";
+
+const state = { region: "all", family: "all", query: "", selected: "xhs", job: "decide", jobRegion: "all", spec: "all" };
+
+function h(tag, props, ...children) {
+  const node = document.createElement(tag);
+  Object.entries(props || {}).forEach(([key, value]) => {
+    if (value == null || value === false) return;
+    if (key === "class") node.className = value;
+    else if (key === "style") node.setAttribute("style", value);
+    else if (key.startsWith("on") && typeof value === "function") node.addEventListener(key.slice(2).toLowerCase(), value);
+    else if (key === "value" && "value" in node) node.value = value;
+    else if (typeof value === "boolean") node[key] = value;
+    else node.setAttribute(key, value === true ? "" : String(value));
+  });
+  children.flat().forEach((child) => {
+    if (child == null || child === false) return;
+    node.append(child.nodeType ? child : document.createTextNode(String(child)));
+  });
+  return node;
+}
+
+function table(headers, rows, numeric) {
+  const numericSet = new Set(numeric || []);
+  return h("div", { class: "table-wrap" },
+    h("table", {},
+      h("thead", {}, h("tr", {}, ...headers.map((header, index) => h("th", { class: numericSet.has(index) ? "num" : "" }, header)))),
+      h("tbody", {}, ...rows.map((row) => h("tr", {}, ...row.map((cell, index) => h("td", { class: numericSet.has(index) ? "num" : "" }, cell)))))
+    )
+  );
+}
+
+function mean(list, key) {
+  const total = list.reduce((sum, item) => sum + item.scores[key], 0);
+  return Math.round((total / list.length) * 10) / 10;
+}
+
+function fmt(value) { return value.toFixed(1); }
+
+function topNames(list, key) {
+  const max = Math.max(...list.map((item) => item.scores[key]));
+  return list.filter((item) => item.scores[key] === max).map((item) => item.name).join("、");
+}
+
+function platformName(id) {
+  const found = PLATFORMS.find((item) => item.id === id);
+  return found ? found.name : id;
+}
+
+function panel(id, ...nodes) {
+  return h("section", { class: "panel", id }, ...nodes);
+}
+
+function markChips(containerId, attr, value) {
+  document.querySelectorAll("#" + containerId + " .chip").forEach((button) => {
+    button.classList.toggle("active", button.dataset[attr] === value);
+  });
+}
+
+function overview() {
+  const domestic = PLATFORMS.filter((item) => item.region === "国内");
+  const overseas = PLATFORMS.filter((item) => item.region === "海外");
+  const dimensions = [
+    ["平台类型", "原有", "它是短视频、社区、搜索还是关系网络", "样本归类"],
+    ["内容类型", "原有", "原生供给是图文、短视频、直播、帖子还是长视频", "形态清单"],
+    ["分发机制", "新增", "这条内容靠推荐、搜索、关注、转发还是投票被看见", "发布策略"],
+    ["受众画像", "原有", "年龄、地域和身份的重心在哪里", "画像卡"],
+    ["用户调研", "原有", "任务、场景、信任和痛点是什么", "原话与任务"],
+    ["热点趋势", "原有", "什么题材和形态在上升，信号是什么", "趋势记录"],
+    ["内容要求", "原有", "时长、钩子、封面、正文、号召和禁忌", "制作清单"],
+    ["商业化路径", "新增", "钱在广告、直播、货架、订阅还是商单", "变现位置"],
+    ["创作者生态", "新增", "门槛、激励和机构各自起什么作用", "合作方式"],
+    ["指标口径", "新增", "这个平台该看的动作是什么", "指标字典"],
+    ["合规与风险", "新增", "披露、版权、类目、未成年人和跨境限制", "风险底线"],
+    ["跨平台迁移", "新增", "哪部分能沿用，哪部分必须重做", "迁移对照"]
+  ];
+  return h("div", {},
+    h("div", { class: "note" }, "这是结构基线，用来决定去哪个平台、观察什么、内容长什么样。新增的六个维度在下表里标出。"),
+    h("div", { class: "stats" },
+      h("div", { class: "stat" }, h("b", {}, "16"), h("span", {}, "国内与海外平台")),
+      h("div", { class: "stat" }, h("b", {}, "12"), h("span", {}, "观测维度")),
+      h("div", { class: "stat" }, h("b", {}, "8"), h("span", {}, "受众原型")),
+      h("div", { class: "stat" }, h("b", {}, "10"), h("span", {}, "趋势判断"))
+    ),
+    h("h2", {}, "六个问题扩成十二个维度"),
+    h("p", {}, "平台类型、内容类型、用户调研、受众画像、热点趋势、内容要求仍是现场要看的六件事。另外六件决定这些观察能不能被执行。"),
+    table(["维度", "来源", "每次观测要回答", "留下的产出"], dimensions.map((row) => row.map((cell, index) => index === 1 && cell === "新增" ? h("span", { class: "tag" }, cell) : cell))),
+    h("h2", {}, "国内和海外不是同一套主场"),
+    h("div", { class: "split" },
+      h("div", {},
+        h("h3", {}, "样本平台的类型构成"),
+        h("ul", { class: "families" }, ...FAMILY_ORDER.map((name) => {
+          const count = PLATFORMS.filter((item) => item.family === name).length;
+          return h("li", {},
+            h("span", {}, name),
+            h("span", { class: "rail" }, h("i", { class: "a", style: "width:" + (count / 16 * 100) + "%" })),
+            h("b", {}, String(count))
+          );
+        })),
+        h("p", { class: "caption" }, "单位是平台个数，合计 16。这是观测样本的构成，不是市场份额。" + SOURCE)
+      ),
+      h("div", {},
+        h("h3", {}, "国内与海外的五维适配度均值"),
+        h("div", { class: "legend" },
+          h("span", {}, h("i", { class: "swatch a" }), "国内 8 平台均值"),
+          h("span", {}, h("i", { class: "swatch b" }), "海外 8 平台均值")
+        ),
+        ...SCORE_KEYS.map((key) => h("div", { class: "cmp" },
+          h("div", { class: "cmp-label" }, SCORE_LABEL[key]),
+          h("div", { class: "cmp-track" }, h("span", { class: "rail" }, h("i", { class: "a", style: "width:" + (mean(domestic, key) / 5 * 100) + "%" })), h("b", {}, fmt(mean(domestic, key)))),
+          h("div", { class: "cmp-track" }, h("span", { class: "rail" }, h("i", { class: "b", style: "width:" + (mean(overseas, key) / 5 * 100) + "%" })), h("b", {}, fmt(mean(overseas, key))))
+        )),
+        h("p", { class: "caption" }, "每条维度有两根条：上为国内，下为海外。长度对应 1–5 分，5 表示最适合承担该任务。" + SOURCE)
+      )
+    ),
+    h("p", {}, "国内样本的种草决策和品牌心智更高，海外样本的搜索承接略高。平均值会掩盖专家平台：种草看" + topNames(PLATFORMS, "seed") + "，搜索看" + topNames(PLATFORMS, "search") + "，社区看" + topNames(PLATFORMS, "community") + "，热点速度看" + topNames(PLATFORMS, "velocity") + "，品牌心智看" + topNames(PLATFORMS, "brand") + "。"),
+    h("h2", {}, "同一个动作不能跨平台横比"),
+    table(["用户动作", "在这些平台更接近", "不要误读成"], [
+      ["完播", "抖音、快手、TikTok", "喜欢，或会买"],
+      ["收藏", "小红书、Pinterest、YouTube", "已经成交"],
+      ["转发", "视频号、微博、X、Facebook", "内容质量高"],
+      ["评论", "知乎、Reddit、B站、小红书", "热度本身；先看是在补充还是在指出广告"],
+      ["关注", "公众号、YouTube、快手、LinkedIn", "这一条火了"]
+    ]),
+    h("h2", {}, "观测节奏"),
+    table(["节奏", "看什么", "必须留下"], [
+      ["每天", "每个主场平台 3 条正在上升的内容", "形态、情绪、是不是系列"],
+      ["每周", "同一选题的国内与海外各一条", "钩子、信任词、不能迁移的部分"],
+      ["每月", "20 条评论原话", "按任务归类后的内容缺口"],
+      ["每季", "分发、商业化和披露规则", "改内容要求，不改已经验证的用户任务"]
+    ])
+  );
+}
+
+function chip(containerId, attr, value, label, active, onPick) {
+  return h("button", {
+    type: "button",
+    class: active ? "chip active" : "chip",
+    ["data-" + attr]: value,
+    onClick: () => {
+      onPick(value);
+      markChips(containerId, attr, value);
+    }
+  }, label);
+}
+
+function filteredPlatforms() {
+  const keyword = state.query.trim().toLowerCase();
+  return PLATFORMS.filter((item) => {
+    if (state.region !== "all" && item.region !== state.region) return false;
+    if (state.family !== "all" && item.family !== state.family) return false;
+    if (!keyword) return true;
+    return (item.name + " " + item.type + " " + item.blurb + " " + item.audience + " " + item.forms).toLowerCase().includes(keyword);
+  });
+}
+
+function scoreLine(platform) {
+  const entries = SCORE_KEYS.map((key) => ({ label: SCORE_LABEL[key], value: platform.scores[key] }));
+  const max = Math.max(...entries.map((item) => item.value));
+  const min = Math.min(...entries.map((item) => item.value));
+  const high = entries.filter((item) => item.value === max).map((item) => item.label).join("、");
+  const low = entries.filter((item) => item.value === min).map((item) => item.label).join("、");
+  const reading = max === min ? "五项接近，按具体选题再决定它承担哪一段。" : "优先用它做" + high + "。" + low + "不是它的主任务。";
+    return h("div", {},
+    ...entries.map((item) => h("div", { class: "cmp single" },
+      h("div", { class: "cmp-label" }, item.label),
+      h("div", { class: "cmp-track" }, h("span", { class: "rail" }, h("i", { class: "a", style: "width:" + (item.value / 5 * 100) + "%" })), h("b", {}, String(item.value)))
+    )),
+    h("p", { class: "caption" }, "条的长度是 1–5 分的结构适配度。" + SOURCE),
+    h("p", {}, reading)
+  );
+}
+
+function detailOf(platform) {
+  return h("div", {},
+    h("h2", {}, platform.name),
+    h("p", {}, h("strong", {}, platform.blurb)),
+    h("p", { class: "caption" }, platform.region + " · " + platform.type + " · 分发靠" + platform.graph + " · 对照 " + platform.peer),
+    h("h3", {}, platform.name + "的五维结构适配度"),
+    scoreLine(platform),
+    h("div", { class: "grid-2" },
+      h("div", { class: "block" }, h("h3", {}, "受众画像"), h("p", {}, platform.audience), h("p", {}, platform.age + platform.geo)),
+      h("div", { class: "block" }, h("h3", {}, "用户调研"), h("p", {}, "任务：" + platform.job), h("p", {}, "信任：" + platform.trust), h("p", {}, "痛点：" + platform.pain)),
+      h("div", { class: "block" }, h("h3", {}, "内容类型与热点"), h("p", {}, "原生形态：" + platform.forms), h("p", {}, "正在看的趋势：" + platform.trend), h("p", {}, "本周可执行的观察：" + platform.watch)),
+      h("div", { class: "block" }, h("h3", {}, "变现、创作者与指标"), h("p", {}, "商业化：" + platform.money), h("p", {}, "创作者：" + platform.creator), h("p", {}, "指标：" + platform.kpi), h("p", {}, "节奏：" + platform.cadence))
+    ),
+    h("div", { class: "toolbar" },
+      h("button", { class: "primary", type: "button", onClick: () => openSpecs(platform.id) }, "查看内容要求"),
+      h("span", { class: "caption" }, "可以沿用：" + platform.keep + " 必须重做：" + platform.redo)
+    )
+  );
+}
+
+function drawPlatforms() {
+  const list = filteredPlatforms();
+  const count = document.getElementById("platform-count");
+  if (count) count.textContent = list.length + " 个平台";
+  const current = list.find((item) => item.id === state.selected) || list[0];
+  const results = document.getElementById("platform-results");
+  const detail = document.getElementById("platform-detail");
+  if (!results || !detail) return;
+  if (!current) {
+    results.replaceChildren(h("div", { class: "note warn" }, "没有匹配的平台。换一个类型，或清空搜索词。"));
+    detail.replaceChildren();
+    return;
+  }
+  results.replaceChildren(
+    table(["平台", "区域", "类型", "分发", "种草", "搜索", "热点"], list.map((item) => [
+      h("button", { class: "text-btn", type: "button", onClick: () => { state.selected = item.id; drawPlatforms(); } }, item.id === current.id ? item.name + "（当前）" : item.name),
+      item.region,
+      item.family,
+      item.graph,
+      String(item.scores.seed),
+      String(item.scores.search),
+      String(item.scores.velocity)
+    ]), [4, 5, 6]),
+    h("p", { class: "caption" }, "种草、搜索、热点三列是 1–5 分。点平台名阅读受众、调研和经营方式。")
+  );
+  detail.replaceChildren(detailOf(current));
+}
+
+function platformsPanel() {
+  const search = h("input", { id: "q", type: "search", placeholder: "搜平台、受众或内容形态", value: state.query });
+  search.addEventListener("input", () => { state.query = search.value; drawPlatforms(); });
+  return h("div", {},
+    h("h2", {}, "平台对照"),
+    h("div", { class: "filters", id: "region-filters" },
+      chip("region-filters", "region", "all", "全部区域", true, (value) => { state.region = value; drawPlatforms(); }),
+      chip("region-filters", "region", "国内", "国内", false, (value) => { state.region = value; drawPlatforms(); }),
+      chip("region-filters", "region", "海外", "海外", false, (value) => { state.region = value; drawPlatforms(); })
+    ),
+    h("div", { class: "filters", id: "family-filters" },
+      chip("family-filters", "family", "all", "全部类型", true, (value) => { state.family = value; drawPlatforms(); }),
+      ...FAMILY_ORDER.map((name) => chip("family-filters", "family", name, name, false, (value) => { state.family = value; drawPlatforms(); }))
+    ),
+    h("div", { class: "toolbar" }, search, h("span", { id: "platform-count", class: "caption" }, "")),
+    h("div", { id: "platform-results" }),
+    h("div", { id: "platform-detail" })
+  );
+}
+
+function rankedPlatforms() {
+  const job = JOBS.find((item) => item.id === state.job) || JOBS[0];
+  return {
+    job,
+    list: PLATFORMS.filter((item) => state.jobRegion === "all" || item.region === state.jobRegion)
+      .map((platform, index) => ({ platform, index }))
+      .sort((a, b) => b.platform.scores[job.key] - a.platform.scores[job.key] || a.index - b.index)
+      .map((item) => item.platform)
+  };
+}
+
+function drawJobs() {
+  const box = document.getElementById("job-results");
+  if (!box) return;
+  const ranked = rankedPlatforms();
+  const lead = ranked.list[0];
+  box.replaceChildren(
+    lead ? h("div", { class: "note" }, h("strong", {}, "优先样本：" + lead.name + "。"), lead.blurb + ranked.job.hint) : h("div", { class: "note warn" }, "当前区域没有平台。"),
+    table(["排序", "平台", "区域", SCORE_LABEL[ranked.job.key], "用户在这里的任务"], ranked.list.map((item, index) => [
+      String(index + 1), item.name, item.region, String(item.scores[ranked.job.key]), item.job
+    ]), [0, 3]),
+    h("p", { class: "caption" }, "按「" + SCORE_LABEL[ranked.job.key] + "」从高到低排列，分数是 1–5 的结构适配度。" + SOURCE)
+  );
+}
+
+function audiencePanel() {
+  return h("div", {},
+    h("h2", {}, "先按用户任务选观测场"),
+    h("p", {}, "先确定用户打开平台要完成的事，再用对应的结构分排序。"),
+    h("div", { class: "filters", id: "job-filters" },
+      ...JOBS.map((item) => chip("job-filters", "job", item.id, item.label, item.id === "decide", (value) => { state.job = value; drawJobs(); }))
+    ),
+    h("div", { class: "filters", id: "job-region-filters" },
+      chip("job-region-filters", "jobregion", "all", "全部区域", true, (value) => { state.jobRegion = value; drawJobs(); }),
+      chip("job-region-filters", "jobregion", "国内", "国内", false, (value) => { state.jobRegion = value; drawJobs(); }),
+      chip("job-region-filters", "jobregion", "海外", "海外", false, (value) => { state.jobRegion = value; drawJobs(); })
+    ),
+    h("div", { id: "job-results" }),
+    h("h2", {}, "任务落到哪条路径"),
+    table(["用户任务", "国内主路径", "海外主路径"], [
+      ["购买决定", "小红书搜体验，抖音看短视频和直播，视频号靠朋友转发", "Pinterest 收藏，TikTok 或 Reels 发现，YouTube 看长评测"],
+      ["学习解决问题", "知乎看回答，B站看系列，抖音看切片", "YouTube 搜索，Reddit 核对社区共识"],
+      ["追热点并表态", "微博看话题，抖音看推荐", "X 看时间线，TikTok 看 For You"],
+      ["职业表达", "公众号和知乎写判断", "LinkedIn 写可验证的经验，X 写行业短判断"],
+      ["找同好", "B站分区、小红书评论、快手熟客", "Reddit 版块、Facebook 群组"]
+    ]),
+    h("h2", {}, "八类受众原型"),
+    table(["原型", "年龄重心", "地域重心", "主场", "打开时要完成的事", "信任来自", "内容应避免"], [
+      ["都市决策者", "22–35", "一二线", "小红书、抖音、公众号", "买之前看体验和避坑", "细节、对比、评论共识", "精修硬广、绝对化效果"],
+      ["县域信任消费者", "28–50", "三四线与县域", "快手、视频号", "跟着熟人在直播间决定", "老铁人设、价格、转发", "过度精致、看不懂的梗"],
+      ["Z世代兴趣居民", "16–24", "城市学生与初职场", "B站、抖音、小红书", "娱乐、身份和深度学习", "圈层语言、系列、社区校正", "说教、装年轻"],
+      ["全球短视频原住民", "16–28", "须按国家拆开", "TikTok、Reels、Shorts", "刷趋势并偶尔发现商品", "原生节奏、本地语言、趋势音频", "国内成片只换字幕"],
+      ["高意图学习者", "18–40", "全球，教育程度较高", "YouTube、B站、知乎", "为了一个问题而来", "结构、证据、兑现标题", "标题党、软文"],
+      ["职业决策者", "28–45", "一二线与英语职场", "知乎、公众号、LinkedIn、X", "判断行业或建立专业形象", "个人经验和可验证观点", "空泛励志、隐晦软文"],
+      ["舆论与粉丝", "18–40", "娱乐与公共议题重叠", "微博、抖音、X", "围观、表态、追更新", "速度、话题、明确立场", "慢半拍的空话"],
+      ["计划型生活者", "25–45", "家居穿搭婚礼旅行", "Pinterest、小红书、YouTube", "先收藏，以后再执行", "清单、步骤、关键词", "只有情绪没有步骤"]
+    ]),
+    h("p", { class: "caption" }, "原型是观测用的聚类。年龄和地域写的是重心。" + SOURCE),
+    h("h2", {}, "用户调研的七个问题"),
+    table(["问题", "回答会改变什么", "抽样时听什么"], [
+      ["打开时是消遣、做决定、学习、表态还是找人？", "决定主场平台", "评论第一句在求什么"],
+      ["信任来自体验、销量、熟人、专家还是投票？", "决定谁出镜、要不要证据", "用户引用谁来反驳"],
+      ["决定发生在站内，还是收藏后去别的平台？", "决定号召放哪一步", "求链接，或说去某平台买"],
+      ["保存、转发、评论各自代表什么？", "决定看哪个指标", "转发给谁、收藏来干嘛"],
+      ["他们用什么词说「假」？", "决定去掉哪种制作", "广告、精修、话术、软文"],
+      ["同一任务在国内和海外差在哪一步？", "决定迁移时重做哪里", "同一选题的不同异议"],
+      ["什么内容他们会主动搜？", "决定标题和封面的词", "怎么搜、求关键词"]
+    ]),
+    h("h2", {}, "评论原话的六种归类"),
+    table(["原话类型", "用户正在做的事", "内容上怎么接"], [
+      ["求方法", "已经有意图，缺步骤", "补条件、顺序和失败情况"],
+      ["求对比", "在几个选项之间", "按同一标准比较，不各说各的优点"],
+      ["质疑广告", "在验真", "披露关系，并给出可核对的细节"],
+      ["站队", "在表达身份或立场", "不要用购买号召打断"],
+      ["补充经验", "信任社区多于信任作者", "把补充写进下一集或置顶"],
+      ["地域差异", "在检查是否适用于自己", "写清城市、价格带和前提"]
+    ])
+  );
+}
+
+function trendsPanel() {
+  return h("div", {},
+    h("h2", {}, "十条趋势各自改写多少个平台"),
+    ...TRENDS.map((item) => h("div", { class: "cmp single" },
+      h("div", { class: "cmp-label" }, item.short),
+      h("div", { class: "cmp-track" },
+        h("span", { class: "rail" }, h("i", { class: "a", style: "width:" + (item.platformIds.length / 16 * 100) + "%" })),
+        h("b", {}, String(item.platformIds.length))
+      )
+    )),
+    h("p", { class: "caption" }, "条的长度是这条趋势会直接改变内容做法的平台个数，样本共 16 个。这不是热度指数。" + SOURCE),
+    table(["趋势", "阶段", "主场平台", "内容上要改", "观测信号"], TRENDS.map((item) => [
+      item.name, item.stage, item.platformIds.map(platformName).join("、"), item.ask, item.signal
+    ]))
+  );
+}
+
+function shownPlatforms() {
+  return state.spec === "all" ? PLATFORMS : PLATFORMS.filter((item) => item.id === state.spec);
+}
+
+function drawSpecs() {
+  const make = document.getElementById("spec-make");
+  const rules = document.getElementById("spec-rules");
+  const move = document.getElementById("spec-move");
+  if (!make || !rules || !move) return;
+  const shown = shownPlatforms();
+  make.replaceChildren(table(["平台", "区域", "时长与画幅", "开头", "封面与标题", "正文结构"], shown.map((item) => [item.name, item.region, item.duration, item.hook, item.cover, item.copy])));
+  rules.replaceChildren(table(["平台", "行动号召", "不像原生的做法", "合规底线"], shown.map((item) => [item.name, item.cta, item.ban, item.compliance])), h("p", { class: "caption" }, "规范是发布前清单。" + SOURCE + " 小红书还需另做商业用语和功效承诺检查。"));
+  move.replaceChildren(table(["平台", "对照", "可以沿用", "必须重做"], shown.map((item) => [item.name, item.peer, item.keep, item.redo])));
+}
+
+function openSpecs(id) {
+  state.spec = id;
+  const select = document.getElementById("spec");
+  if (select) select.value = id;
+  drawSpecs();
+  activate("specs");
+}
+
+function specsPanel() {
+  const select = h("select", { id: "spec" },
+    h("option", { value: "all" }, "全部平台"),
+    ...PLATFORMS.map((item) => h("option", { value: item.id }, item.name + " · " + item.region))
+  );
+  select.addEventListener("change", () => { state.spec = select.value; drawSpecs(); });
+  return h("div", {},
+    h("h2", {}, "制作规范"),
+    h("p", {}, "内容要求按平台原生习惯写。先选平台，再核对开头、封面、正文和边界。"),
+    select,
+    h("div", { id: "spec-make" }),
+    h("h2", {}, "号召、禁忌与合规"),
+    h("div", { id: "spec-rules" }),
+    h("h2", {}, "跨平台迁移"),
+    h("div", { id: "spec-move" }),
+    h("div", { class: "note warn" }, "迁移时保留的是结构：钩子、证据顺序和系列关系。语言、音乐、梗、封面文字、披露方式和货架是否存在，都要按目标平台重做。")
+  );
+}
+
+function loadJson(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key) || ""); }
+  catch (error) { return fallback; }
+}
+
+function drawNotes() {
+  const box = document.getElementById("note-list");
+  if (!box) return;
+  const notes = loadJson("obs-notes", []);
+  if (!notes.length) {
+    box.replaceChildren();
+    return;
+  }
+  box.replaceChildren(
+    h("h2", {}, "已记录 " + notes.length + " 条"),
+    table(["日期", "平台", "类型", "热度", "观察", ""], notes.map((item) => [
+      item.date,
+      platformName(item.platformId),
+      item.lens,
+      item.heat,
+      item.topic + "：" + item.body,
+      h("button", { class: "text-btn", type: "button", onClick: () => {
+        const next = loadJson("obs-notes", []).filter((note) => note.id !== item.id);
+        localStorage.setItem("obs-notes", JSON.stringify(next));
+        drawNotes();
+      } }, "删除")
+    ]))
+  );
+}
+
+function updateCheckCount() {
+  const target = document.getElementById("check-count");
+  if (!target) return;
+  const checks = loadJson("obs-checks", {});
+  const done = WEEKLY.filter((item) => checks[item.id]).length;
+  target.textContent = "已完成 " + done + "/5。勾选保存在这台浏览器里。";
+}
+
+function logPanel() {
+  const checks = loadJson("obs-checks", {});
+  const date = h("input", { type: "text", value: "2026-11-02" });
+  const platform = h("select", {}, ...PLATFORMS.map((item) => h("option", { value: item.id }, item.name)));
+  platform.value = "xhs";
+  const lens = h("select", {}, ...["热点形态", "受众原话", "内容缺口", "规则变化", "竞品打法"].map((item) => h("option", { value: item }, item)));
+  const heat = h("select", {}, ...["上升", "平稳", "退潮"].map((item) => h("option", { value: item }, item)));
+  const topic = h("input", { type: "text", placeholder: "选题或现象，一句话" });
+  const body = h("textarea", { placeholder: "写下看到的原话、形态，或规则具体变了什么" });
+  return h("div", {},
+    h("h2", {}, "本周固定动作"),
+    h("p", { id: "check-count", class: "caption" }, ""),
+    ...WEEKLY.map((item) => {
+      const input = h("input", { type: "checkbox" });
+      input.checked = Boolean(checks[item.id]);
+      input.addEventListener("change", () => {
+        const next = loadJson("obs-checks", {});
+        next[item.id] = input.checked;
+        localStorage.setItem("obs-checks", JSON.stringify(next));
+        updateCheckCount();
+      });
+      return h("label", { class: "check" }, input, item.label);
+    }),
+    h("button", { class: "text-btn", type: "button", onClick: () => {
+      localStorage.setItem("obs-checks", "{}");
+      document.querySelectorAll("#log input[type=checkbox]").forEach((input) => { input.checked = false; });
+      updateCheckCount();
+    } }, "清除本周勾选"),
+    h("h2", {}, "记一条观察"),
+    h("div", { class: "form-grid" }, date, platform, lens, heat),
+    topic,
+    body,
+    h("div", { class: "toolbar" }, h("button", { class: "primary", type: "button", onClick: () => {
+      if (!topic.value.trim() || !body.value.trim()) return;
+      const notes = loadJson("obs-notes", []);
+      notes.unshift({
+        id: Date.now().toString(36),
+        date: date.value.trim() || "2026-11-02",
+        platformId: platform.value,
+        lens: lens.value,
+        heat: heat.value,
+        topic: topic.value.trim(),
+        body: body.value.trim()
+      });
+      localStorage.setItem("obs-notes", JSON.stringify(notes));
+      topic.value = "";
+      body.value = "";
+      drawNotes();
+    } }, "记下这条")),
+    h("p", { class: "caption" }, "记录保存在这台浏览器里，换一台电脑不会跟着走。"),
+    h("div", { id: "note-list" })
+  );
+}
+
+function activate(id) {
+  const known = TABS.some((item) => item.id === id);
+  const next = known ? id : "overview";
+  document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("active", button.dataset.tab === next));
+  document.querySelectorAll(".panel").forEach((section) => { section.hidden = section.id !== next; });
+  if (location.hash !== "#" + next) history.replaceState(null, "", "#" + next);
+}
+
+function init() {
+  const nav = document.getElementById("nav");
+  TABS.forEach((tab) => {
+    nav.append(h("button", { class: "tab", type: "button", "data-tab": tab.id, onClick: () => activate(tab.id) }, tab.label));
+  });
+  document.getElementById("main").append(
+    panel("overview", overview()),
+    panel("platforms", platformsPanel()),
+    panel("audience", audiencePanel()),
+    panel("trends", trendsPanel()),
+    panel("specs", specsPanel()),
+    panel("log", logPanel())
+  );
+  drawPlatforms();
+  drawJobs();
+  drawSpecs();
+  drawNotes();
+  updateCheckCount();
+  const hash = location.hash.replace("#", "");
+  activate(hash || "overview");
+  document.getElementById("copy").addEventListener("click", async () => {
+    const url = location.href.split("#")[0];
+    try { await navigator.clipboard.writeText(url); }
+    catch (error) { window.prompt("复制这个链接", url); return; }
+    const flash = document.getElementById("flash");
+    flash.textContent = "链接已复制";
+    setTimeout(() => { flash.textContent = ""; }, 1600);
+  });
+}
+
+init();
+  </script>
+</body>
+</html>
